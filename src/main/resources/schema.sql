@@ -21,7 +21,7 @@ create table if not exists orders (
     id identity,
     deliveryName varchar(50) not null,
     deliveryStreet varchar(50) not null,
-    delivertyCity varchar(50) not null,
+    deliveryCity varchar(50) not null,
     deliveryState varchar(50) not null,
     deliveryZip varchar(50) not null,
     ccNumber varchar(16) not null,

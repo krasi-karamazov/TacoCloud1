@@ -10,17 +10,17 @@
   <img th:src="@{/images/TacoCloud.png}">
   <h3>Deliver my taco masterpiece to...</h3>
   <label th:for="name">Name: </label>
-  <input type="text" name="name" th:field="*{name}">
+  <input type="text" name="name" th:field="*{deliveryName}">
   <label th:for="street">Street: </label>
-  <input type="text" name="street" th:field="*{street}">
+  <input type="text" name="street" th:field="*{deliveryStreet}">
   <label th:for="street">Street address: </label>
-  <input type="text" name="street" th:field="*{street}">
+  <input type="text" name="street" th:field="*{deliveryStreet}">
   <label th:for="city">City: </label>
-  <input type="text" name="city" th:field="*{city}">
+  <input type="text" name="city" th:field="*{deliveryCity}">
   <label th:for="state">State: </label>
-  <input type="text" name="state" th:field="*{state}">
+  <input type="text" name="state" th:field="*{deliveryState}">
   <label th:for="zip">Zip code: </label>
-  <input type="text" name="zip" th:field="*{zip}">
+  <input type="text" name="zip" th:field="*{deliveryZip}">
   <br>
   <br>
   <h3>Here's how I'll pay</h3>

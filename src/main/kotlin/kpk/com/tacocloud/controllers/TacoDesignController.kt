@@ -27,8 +27,8 @@ class TacoDesignController constructor(@Autowired @Qualifier("IngredientsJDBCRep
     fun order() = Order()
 
     @GetMapping
-    fun getDesignForm(model: Model): String {
-        model.addAttribute("taco", Taco())
+    fun getDesignForm(model: Model, @ModelAttribute("taco") taco: Taco): String {
+        model.addAttribute("taco", taco)
         putIngredientsIntoModel(model)
         return "design"
     }
@@ -39,8 +39,11 @@ class TacoDesignController constructor(@Autowired @Qualifier("IngredientsJDBCRep
             return "design"
         }
         val savedTaco = tacosRepository.save(taco)
-        order.taco = savedTaco
-        return "redirect:/orders"
+        savedTaco?.let {
+            order.tacos.add(savedTaco)
+        } ?: print("Could not save taco")
+
+        return "redirect:/orders/current"
     }
 
     private fun putIngredientsIntoModel(model: Model) {

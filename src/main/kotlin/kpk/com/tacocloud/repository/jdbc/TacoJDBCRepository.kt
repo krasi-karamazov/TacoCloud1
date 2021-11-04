@@ -31,8 +31,10 @@ class TacoJDBCRepository constructor(@Autowired val jdbcTemplate: JdbcTemplate):
 
     private fun saveTacoInfo(taco: Taco): Long {
         val createdAt = Date().time
-        val preparedStatementCreator = PreparedStatementCreatorFactory("insert into TACOS (name, CREATEAT) values ( ?, ? )",
-            Types.VARCHAR, Types.TIMESTAMP).newPreparedStatementCreator(listOf(taco.name, Timestamp(createdAt)))
+        val preparedStatementCreatorFactory = PreparedStatementCreatorFactory("insert into tacos (name, CREATEAT) values ( ?, ? )",
+            Types.VARCHAR, Types.TIMESTAMP)
+        preparedStatementCreatorFactory.setReturnGeneratedKeys(true)
+        val preparedStatementCreator = preparedStatementCreatorFactory.newPreparedStatementCreator(listOf(taco.name, Timestamp(createdAt)))
         val keyHolder = GeneratedKeyHolder()
         jdbcTemplate.update(preparedStatementCreator, keyHolder)
         return keyHolder.key?.toLong() ?: -1

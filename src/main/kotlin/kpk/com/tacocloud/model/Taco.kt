@@ -8,6 +8,6 @@ import javax.validation.constraints.NotNull
 data class Taco(
     @NotBlank var id: Long = -1,
     @NotBlank val name: String = "",
-    @NotEmpty @NotNull val ingredients: List<String>? = null,
+    @NotEmpty @NotNull var ingredients: List<String>? = null,
     var createdAt: Date? = null
 )
