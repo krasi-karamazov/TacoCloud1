@@ -1,24 +1,47 @@
 package kpk.com.tacocloud.model
 
+import org.hibernate.Hibernate
 import org.hibernate.validator.constraints.CreditCardNumber
+import javax.persistence.Entity
+import javax.persistence.Id
 import javax.validation.constraints.Digits
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
 
+@Entity
 data class Order(
-    @NotBlank var deliveryName: String = "",
-    @NotBlank var deliveryStreet: String = "",
-    @NotBlank var deliveryCity: String = "",
-    @NotBlank var deliveryState: String = "",
-    var deliveryZip: String = "",
+    @NotBlank val deliveryName: String,
+    @NotBlank val deliveryStreet: String,
+    @NotBlank val deliveryCity: String,
+    @NotBlank val deliveryState: String,
+    val deliveryZip: String,
     @CreditCardNumber
-    var ccNumber: String = "",
+    val ccNumber: String,
     @Pattern(regexp = "(?:0[1-9]|1[0-2])/[0-9]{2}")
-    var ccExpiration: String = "",
+    val ccExpiration: String,
     @Digits(integer = 3, fraction = 0)
-    var ccCVV: String = "",
+    val ccCVV: String,
     @Transient
-    var tacos: MutableList<Taco> = mutableListOf(),
-    var placedAt: Long = 0L,
-    var id: Long = 0L
-)
+    val tacos: MutableList<Taco>,
+    val placedAt: Long,
+    @Id
+    val id: Long
+) {
+     constructor() : this("", "", "",
+         "", "", "", "",
+         "", mutableListOf(), 0L, 0L)
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
+        other as Order
+
+        return id == other.id
+    }
+
+    override fun hashCode(): Int = javaClass.hashCode()
+
+    @Override
+    override fun toString(): String {
+        return this::class.simpleName + "(id = $id , deliveryName = $deliveryName , deliveryStreet = $deliveryStreet , deliveryCity = $deliveryCity , deliveryState = $deliveryState , deliveryZip = $deliveryZip , ccNumber = $ccNumber , ccExpiration = $ccExpiration , ccCVV = $ccCVV , tacos = $tacos , placedAt = $placedAt )"
+    }
+}
