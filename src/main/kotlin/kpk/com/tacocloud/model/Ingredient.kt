@@ -4,7 +4,7 @@ import org.hibernate.Hibernate
 import javax.persistence.Entity
 import javax.persistence.Id
 
-@Entity
+@Entity(name = "ingredients")
 data class Ingredient(
     @Id
     val id: String,

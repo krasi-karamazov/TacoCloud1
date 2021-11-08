@@ -2,6 +2,7 @@ package kpk.com.tacocloud.controllers
 
 import kpk.com.tacocloud.model.Order
 import kpk.com.tacocloud.repository.OrdersRepository
+import kpk.com.tacocloud.repository.jpa.OrderJPARepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Controller
@@ -14,7 +15,7 @@ import javax.validation.Valid
 @Controller
 @RequestMapping("/orders")
 @SessionAttributes("order")
-class OrdersController (@Autowired @Qualifier("OrdersJDBCRepository") val ordersRepository: OrdersRepository) {
+class OrdersController (@Autowired val ordersRepository: OrderJPARepository) {
 
     @GetMapping("/current")
     fun getOrderForm(model: Model, @SessionAttribute("order") order: Order): String {
@@ -28,7 +29,7 @@ class OrdersController (@Autowired @Qualifier("OrdersJDBCRepository") val orders
             return "order_form"
         }
 
-        ordersRepository.saveOrder(order)
+        ordersRepository.save(order)
         println(order.toString())
 
         return "redirect:/orders/order_submitted"

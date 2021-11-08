@@ -6,6 +6,10 @@ import kpk.com.tacocloud.model.Order
 import kpk.com.tacocloud.model.Taco
 import kpk.com.tacocloud.repository.IngredientsRepository
 import kpk.com.tacocloud.repository.TacoRepository
+import kpk.com.tacocloud.repository.jdbc.IngredientsJDBCRepository
+import kpk.com.tacocloud.repository.jdbc.TacoJDBCRepository
+import kpk.com.tacocloud.repository.jpa.IngredientsJPARepository
+import kpk.com.tacocloud.repository.jpa.TacoJPARepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Controller
@@ -17,8 +21,8 @@ import javax.validation.Valid
 @Controller
 @RequestMapping("/design")
 @SessionAttributes("order")
-class TacoDesignController constructor(@Autowired @Qualifier("IngredientsJDBCRepo") val ingredientsRepository: IngredientsRepository,
-    @Autowired @Qualifier("TacoJDBCRepository") val tacosRepository: TacoRepository) {
+class TacoDesignController constructor(@Autowired val ingredientsRepository: IngredientsJPARepository,
+    @Autowired val tacosRepository: TacoJPARepository) {
 
     @ModelAttribute("taco")
     fun taco() = Taco()
@@ -39,21 +43,28 @@ class TacoDesignController constructor(@Autowired @Qualifier("IngredientsJDBCRep
             return "design"
         }
         val savedTaco = tacosRepository.save(taco)
-        savedTaco?.let {
+        savedTaco.let {
             order.tacos.add(savedTaco)
-        } ?: print("Could not save taco")
+        }
 
         return "redirect:/orders/current"
     }
 
     private fun putIngredientsIntoModel(model: Model) {
-        val ingredients = ingredientsRepository.findAll()
-        ingredients?.let {
-            model.addAttribute(IngredientType.WRAP.name.lowercase(), it[IngredientType.WRAP.name]?: listOf<Ingredient>())
-            model.addAttribute(IngredientType.CHEESE.name.lowercase(), it[IngredientType.CHEESE.name]?: listOf<Ingredient>())
-            model.addAttribute(IngredientType.PROTEIN.name.lowercase(), it[IngredientType.PROTEIN.name]?: listOf<Ingredient>())
-            model.addAttribute(IngredientType.SAUSE.name.lowercase(), it[IngredientType.SAUSE.name]?: listOf<Ingredient>())
-            model.addAttribute(IngredientType.VEGGIES.name.lowercase(), it[IngredientType.VEGGIES.name]?: listOf<Ingredient>())
+        val ingredients = mutableMapOf<String, MutableList<Ingredient>>()
+        ingredientsRepository.findAll().forEach { ingredient ->
+            if (ingredients.containsKey(ingredient.type.name)) {
+                ingredients[ingredient.type.name]?.add(ingredient)
+            } else {
+                ingredients[ingredient.type.name] = mutableListOf(ingredient)
+            }
+        }
+        ingredients.let {
+            model.addAttribute(IngredientType.WRAP.name.lowercase(), it[IngredientType.WRAP.name] ?: listOf<Ingredient>())
+            model.addAttribute(IngredientType.CHEESE.name.lowercase(), it[IngredientType.CHEESE.name] ?: listOf<Ingredient>())
+            model.addAttribute(IngredientType.PROTEIN.name.lowercase(), it[IngredientType.PROTEIN.name] ?: listOf<Ingredient>())
+            model.addAttribute(IngredientType.SAUSE.name.lowercase(), it[IngredientType.SAUSE.name] ?: listOf<Ingredient>())
+            model.addAttribute(IngredientType.VEGGIES.name.lowercase(), it[IngredientType.VEGGIES.name] ?: listOf<Ingredient>())
         }
 
     }

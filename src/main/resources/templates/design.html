@@ -11,31 +11,31 @@
         <div class="ingredients-group" id="wraps">
             <h3>Designate your wrap:</h3>
             <div th:each="ingredient: ${wrap}">
-                <input name="ingredients" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.id}">
+                <input th:field="*{ingredients}" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.id}">
             </div>
         </div>
         <div class="ingredients-group" id="proteins">
             <h3>Designate your protein:</h3>
             <div th:each="ingredient: ${protein}">
-                <input name="ingredients" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.id}">
+                <input th:field="*{ingredients}" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.id}">
             </div>
         </div>
         <div class="ingredients-group" id="veggies">
             <h3>Designate your veggies:</h3>
             <div th:each="ingredient: ${veggies}">
-                <input name="ingredients" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.id}">
+                <input th:field="*{ingredients}" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.id}">
             </div>
         </div>
         <div class="ingredients-group" id="cheeses">
             <h3>Designate your cheese:</h3>
             <div th:each="ingredient: ${cheese}">
-                <input name="ingredients" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.id}">
+                <input th:field="*{ingredients}" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.id}">
             </div>
         </div>
         <div class="ingredients-group" id="sauses">
             <h3>Designate your sause:</h3>
             <div th:each="ingredient: ${sause}">
-                <input name="ingredients" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.id}">
+                <input th:field="*{ingredients}" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.id}">
             </div>
         </div>
     </div>

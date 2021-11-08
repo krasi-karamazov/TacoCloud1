@@ -2,13 +2,13 @@ package kpk.com.tacocloud.model
 
 import org.hibernate.Hibernate
 import org.hibernate.validator.constraints.CreditCardNumber
-import javax.persistence.Entity
-import javax.persistence.Id
+import java.util.*
+import javax.persistence.*
 import javax.validation.constraints.Digits
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
 
-@Entity
+@Entity(name = "orders")
 data class Order(
     @NotBlank val deliveryName: String,
     @NotBlank val deliveryStreet: String,
@@ -21,11 +21,12 @@ data class Order(
     val ccExpiration: String,
     @Digits(integer = 3, fraction = 0)
     val ccCVV: String,
-    @Transient
+    @OneToMany(targetEntity = Taco::class)
     val tacos: MutableList<Taco>,
-    val placedAt: Long,
+    var placedAt: Long,
     @Id
-    val id: Long
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    var id: Long
 ) {
      constructor() : this("", "", "",
          "", "", "", "",
@@ -43,5 +44,10 @@ data class Order(
     @Override
     override fun toString(): String {
         return this::class.simpleName + "(id = $id , deliveryName = $deliveryName , deliveryStreet = $deliveryStreet , deliveryCity = $deliveryCity , deliveryState = $deliveryState , deliveryZip = $deliveryZip , ccNumber = $ccNumber , ccExpiration = $ccExpiration , ccCVV = $ccCVV , tacos = $tacos , placedAt = $placedAt )"
+    }
+
+    @PrePersist
+    fun placedAt() {
+        placedAt = Date().time
     }
 }
