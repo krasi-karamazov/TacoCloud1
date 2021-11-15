@@ -24,13 +24,15 @@ data class Order(
     @OneToMany(targetEntity = Taco::class)
     val tacos: MutableList<Taco>,
     var placedAt: Long,
+    @ManyToOne
+    var user: User? = null,
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long
 ) {
      constructor() : this("", "", "",
          "", "", "", "",
-         "", mutableListOf(), 0L, 0L)
+         "", mutableListOf(), 0L, null, 0L)
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false

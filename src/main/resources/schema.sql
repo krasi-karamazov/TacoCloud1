@@ -1,24 +1,25 @@
 create table if not exists ingredients (
-    id varchar(4) not null,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY not null,
+    ingredientIdentifier varchar(4) not null,
     name varchar(25) not null,
     type varchar(20) not null
 );
 
 create table if not exists tacos (
-    id identity,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY not null,
     name varchar(50) not null,
-    createAt timestamp not null
+    createdAt timestamp not null
 );
 
 create table if not exists taco_ingredients (
-    taco bigint not null,
-    ingredient varchar(4) not null,
-    foreign key (taco) references tacos(id),
-    foreign key (ingredient) references ingredients(id)
+    taco BIGINT not null ,
+    ingredient bigint not null,
+    constraint foreign key (taco) references tacos(id),
+    constraint foreign key (ingredient) references ingredients(id)
 );
 
 create table if not exists orders (
-    id identity,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY not null,
     deliveryName varchar(50) not null,
     deliveryStreet varchar(50) not null,
     deliveryCity varchar(50) not null,
@@ -31,8 +32,8 @@ create table if not exists orders (
 );
 
 create table if not exists taco_orders (
-    tacoOrder bigint not null,
-    taco bigint not null,
+    tacoOrder BIGINT not null,
+    taco BIGINT not null,
     foreign key (tacoOrder) references orders(id),
     foreign key (taco) references tacos(id)
 );

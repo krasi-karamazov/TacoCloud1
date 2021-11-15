@@ -5,6 +5,4 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
-@Repository
-@Qualifier("TacoJPARepository")
 interface TacoJPARepository : CrudRepository<Taco, Long>

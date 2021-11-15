@@ -1,0 +1,22 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    defer-datasource-initialization: true
+  datasource:
+    username: kpkdev
+    password: Kpkdev_85057166
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_example
+  sql:
+    init:
+      mode: always
+server:
+  port: 8443
+  ssl:
+    key-store: kpkdevkeys.jks
+    key-password: Kpkdev_85057166
+    key-store-password: Kpkdev_85057166

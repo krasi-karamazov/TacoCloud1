@@ -4,6 +4,6 @@ import kpk.com.tacocloud.model.Ingredient
 
 interface IngredientsRepository {
     fun findAll(): Map<String, List<Ingredient>>?
-    fun findOne(id: String): Ingredient?
+    fun findOne(id: Long): Ingredient?
     fun save(ingredient: Ingredient): Ingredient?
 }

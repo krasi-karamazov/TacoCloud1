@@ -26,8 +26,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation:2.5.6")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    developmentOnly("org.springframework.boot:spring-boot-devtools:2.5.5")
-    runtimeOnly("com.h2database:h2:1.4.200")
+    developmentOnly("org.springframework.boot:spring-boot-devtools:2.5.6")
+    implementation("mysql:mysql-connector-java:8.0.27")
     implementation("org.springframework.boot:spring-boot-starter-security:2.5.6")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.6")
 }

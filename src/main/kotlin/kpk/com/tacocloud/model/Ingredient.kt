@@ -7,10 +7,11 @@ import javax.persistence.Id
 @Entity(name = "ingredients")
 data class Ingredient(
     @Id
-    val id: String,
+    var id: Long,
+    val ingredientIdentifier: String,
     val name: String,
-    val type:IngredientType) {
-    constructor() : this("", "", IngredientType.WRAP)
+    val type:String) {
+    constructor() : this(0, "", "", IngredientType.WRAP.name)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -24,6 +25,7 @@ data class Ingredient(
 
     @Override
     override fun toString(): String {
-        return this::class.simpleName + "(id = $id , name = $name , type = $type )"
+        return this::class.simpleName + "(id = $id , ingredientId = $ingredientIdentifier , name = $name , type = $type )"
     }
+
 }

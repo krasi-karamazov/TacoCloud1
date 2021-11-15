@@ -6,7 +6,7 @@
     <title>Design your own taco</title>
 </head>
 <body>
-<form method="post" th:object="${taco}">
+<form th:method="post" th:action="@{/design}" th:object="${taco}">
     <div class="grid">
         <div class="ingredients-group" id="wraps">
             <h3>Designate your wrap:</h3>

@@ -24,21 +24,20 @@ import javax.validation.Valid
 class TacoDesignController constructor(@Autowired val ingredientsRepository: IngredientsJPARepository,
     @Autowired val tacosRepository: TacoJPARepository) {
 
-    @ModelAttribute("taco")
+    @ModelAttribute(name="taco")
     fun taco() = Taco()
 
     @ModelAttribute
     fun order() = Order()
 
     @GetMapping
-    fun getDesignForm(model: Model, @ModelAttribute("taco") taco: Taco): String {
-        model.addAttribute("taco", taco)
+    fun getDesignForm(model: Model): String {
         putIngredientsIntoModel(model)
         return "design"
     }
 
     @PostMapping
-    fun submitDesign(@Valid taco: Taco, errors: Errors, @ModelAttribute order: Order): String {
+    fun submitDesign(@ModelAttribute("taco") @Valid taco: Taco, errors: Errors, @ModelAttribute order: Order): String {
         if(errors.hasErrors()) {
             return "design"
         }
@@ -53,10 +52,10 @@ class TacoDesignController constructor(@Autowired val ingredientsRepository: Ing
     private fun putIngredientsIntoModel(model: Model) {
         val ingredients = mutableMapOf<String, MutableList<Ingredient>>()
         ingredientsRepository.findAll().forEach { ingredient ->
-            if (ingredients.containsKey(ingredient.type.name)) {
-                ingredients[ingredient.type.name]?.add(ingredient)
+            if (ingredients.containsKey(ingredient.type)) {
+                ingredients[ingredient.type]?.add(ingredient)
             } else {
-                ingredients[ingredient.type.name] = mutableListOf(ingredient)
+                ingredients[ingredient.type] = mutableListOf(ingredient)
             }
         }
         ingredients.let {

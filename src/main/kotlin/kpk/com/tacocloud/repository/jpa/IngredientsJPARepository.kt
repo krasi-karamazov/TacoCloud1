@@ -5,4 +5,4 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
-interface IngredientsJPARepository : CrudRepository<Ingredient, String>
+interface IngredientsJPARepository : CrudRepository<Ingredient, Long>

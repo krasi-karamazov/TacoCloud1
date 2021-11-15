@@ -28,16 +28,16 @@ class IngredientsJDBCRepository constructor(@Autowired val jdbcTemplate: JdbcTem
     private fun mapListToMap(ingredientsList: List<Ingredient>): Map<String, List<Ingredient>> {
         val map = mutableMapOf<String, MutableList<Ingredient>>()
         ingredientsList.forEach { ingredient ->
-            if (map.containsKey(ingredient.type.name)) {
-                map[ingredient.type.name]?.add(ingredient)
+            if (map.containsKey(ingredient.type)) {
+                map[ingredient.type]?.add(ingredient)
             } else {
-                map[ingredient.type.name] = mutableListOf(ingredient)
+                map[ingredient.type] = mutableListOf(ingredient)
             }
         }
         return map
     }
 
-    override fun findOne(id: String): Ingredient? {
+    override fun findOne(id: Long): Ingredient? {
         return try {
             jdbcTemplate.queryForObject("select * from ingredients", this::mapRowToIngredient)
         } catch (e: SQLException) {
@@ -46,7 +46,7 @@ class IngredientsJDBCRepository constructor(@Autowired val jdbcTemplate: JdbcTem
     }
 
     override fun save(ingredient: Ingredient): Ingredient? {
-        val rowsAffected = jdbcTemplate.update("insert into INGREDIENTS (id, name, type) values (?, ?, ?)", ingredient.id, ingredient.name, ingredient.type)
+        val rowsAffected = jdbcTemplate.update("insert into ingredients (ingredientId, name, type) values (?, ?, ?)", ingredient.id, ingredient.name, ingredient.type)
         return if (rowsAffected > 0) {
             ingredient
         } else {
@@ -56,9 +56,10 @@ class IngredientsJDBCRepository constructor(@Autowired val jdbcTemplate: JdbcTem
 
     @Throws(SQLException::class)
     private fun mapRowToIngredient(rs: ResultSet, rowNum: Int): Ingredient {
-        return Ingredient(rs.getString("id"),
+        return Ingredient(rs.getLong("id"),
+            rs.getString("ingredientId"),
             rs.getString("name"),
-            IngredientType.valueOf(rs.getString("type"))
+            rs.getString("type")
         )
     }
 }
