@@ -15,7 +15,7 @@ import kotlin.jvm.Throws
 @Qualifier("IngredientsJDBCRepo")
 class IngredientsJDBCRepository constructor(@Autowired val jdbcTemplate: JdbcTemplate) : IngredientsRepository {
 
-    override fun findAll(): Map<String, List<Ingredient>>? {
+    /* override fun findAll(): Map<String, List<Ingredient>>? {
         return try {
             val ingredientsList = jdbcTemplate.query("select * from ingredients", this::mapRowToIngredient)
             return mapListToMap(ingredientsList)
@@ -61,5 +61,16 @@ class IngredientsJDBCRepository constructor(@Autowired val jdbcTemplate: JdbcTem
             rs.getString("name"),
             rs.getString("type")
         )
+    }*/
+    override fun findAll(): Map<String, List<Ingredient>>? {
+        TODO("Not yet implemented")
+    }
+
+    override fun findOne(id: Long): Ingredient? {
+        TODO("Not yet implemented")
+    }
+
+    override fun save(ingredient: Ingredient): Ingredient? {
+        TODO("Not yet implemented")
     }
 }

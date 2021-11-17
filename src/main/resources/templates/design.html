@@ -6,36 +6,38 @@
     <title>Design your own taco</title>
 </head>
 <body>
+<a th:href="@{/orders/orders_list}">See your past orders</a>
+<br>
 <form th:method="post" th:action="@{/design}" th:object="${taco}">
     <div class="grid">
         <div class="ingredients-group" id="wraps">
             <h3>Designate your wrap:</h3>
             <div th:each="ingredient: ${wrap}">
-                <input th:field="*{ingredients}" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.id}">
+                <input th:field="*{ingredients}" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.ingredientIdentifier}">
             </div>
         </div>
         <div class="ingredients-group" id="proteins">
             <h3>Designate your protein:</h3>
             <div th:each="ingredient: ${protein}">
-                <input th:field="*{ingredients}" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.id}">
+                <input th:field="*{ingredients}" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.ingredientIdentifier}">
             </div>
         </div>
         <div class="ingredients-group" id="veggies">
             <h3>Designate your veggies:</h3>
             <div th:each="ingredient: ${veggies}">
-                <input th:field="*{ingredients}" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.id}">
+                <input th:field="*{ingredients}" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.ingredientIdentifier}">
             </div>
         </div>
         <div class="ingredients-group" id="cheeses">
             <h3>Designate your cheese:</h3>
             <div th:each="ingredient: ${cheese}">
-                <input th:field="*{ingredients}" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.id}">
+                <input th:field="*{ingredients}" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.ingredientIdentifier}">
             </div>
         </div>
         <div class="ingredients-group" id="sauses">
             <h3>Designate your sause:</h3>
             <div th:each="ingredient: ${sause}">
-                <input th:field="*{ingredients}" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.id}">
+                <input th:field="*{ingredients}" th:text="${ingredient.name}" type="checkbox" th:value="${ingredient.ingredientIdentifier}">
             </div>
         </div>
     </div>

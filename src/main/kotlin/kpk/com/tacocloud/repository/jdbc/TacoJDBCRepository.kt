@@ -22,7 +22,7 @@ class TacoJDBCRepository constructor(@Autowired val jdbcTemplate: JdbcTemplate):
             null
         } else {
             taco.ingredients?.forEach {
-                jdbcTemplate.update("insert into TACO_INGREDIENTS (taco, ingredient) values ( ?, ? )", taco.id, it)
+                jdbcTemplate.update("insert into tacos_ingredients (taco, ingredient) values ( ?, ? )", taco.id, it)
             }
 
             taco

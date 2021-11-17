@@ -22,7 +22,6 @@ class OrdersJDBCRepository constructor(@Autowired private val jdbcTemplate: Jdbc
     private val objectMapper: ObjectMapper = ObjectMapper()
 
     override fun saveOrder(order: Order): Order {
-        order.placedAt = Date().time
         val orderID = saveOrderDetails(order)
         order.id = orderID
         saveOrderedTacos(order)
@@ -41,7 +40,7 @@ class OrdersJDBCRepository constructor(@Autowired private val jdbcTemplate: Jdbc
     private fun saveOrderDetails(order: Order): Long {
         val values: MutableMap<String, Any> =
             objectMapper.convertValue(order, Map::class.java) as MutableMap<String, Any>
-        values["placedAt"] = Timestamp(order.placedAt)
+        values["placedAt"] = Timestamp(order.placedAt?.time ?: 0)
         return orderInserter.executeAndReturnKey(values).toLong()
     }
 }

@@ -1,6 +1,7 @@
 package kpk.com.tacocloud.model
 
 import org.hibernate.Hibernate
+import java.io.Serializable
 import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.NotBlank
@@ -14,14 +15,14 @@ data class Taco(
     var id: Long,
 
     @NotBlank
-    @Size(min = 5, message = "Your name must be atleast 5 chars long")
-    val name: String,
-    @Size(min = 1, message = "Choose at least 1 ingredient")
+    @Size(min = 5, message = "Your name must be at least 5 chars long")
+    var name: String,
 
-    @OneToMany(targetEntity = Ingredient::class)
+    @Size(min = 1, message = "Choose at least 1 ingredient")
+    @ManyToMany(targetEntity = Ingredient::class)
     var ingredients: List<Ingredient>?,
     var createdAt: Date?
-) {
+) : Serializable {
     constructor(): this(-1L, "", null, null, )
 
     @PrePersist

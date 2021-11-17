@@ -10,20 +10,20 @@ import javax.validation.constraints.Pattern
 
 @Entity(name = "orders")
 data class Order(
-    @NotBlank val deliveryName: String,
-    @NotBlank val deliveryStreet: String,
-    @NotBlank val deliveryCity: String,
-    @NotBlank val deliveryState: String,
-    val deliveryZip: String,
+    @NotBlank var deliveryName: String,
+    @NotBlank var deliveryStreet: String,
+    @NotBlank var deliveryCity: String,
+    @NotBlank var deliveryState: String,
+    var deliveryZip: String,
     @CreditCardNumber
-    val ccNumber: String,
+    var ccNumber: String,
     @Pattern(regexp = "(?:0[1-9]|1[0-2])/[0-9]{2}")
-    val ccExpiration: String,
+    var ccExpiration: String,
     @Digits(integer = 3, fraction = 0)
-    val ccCVV: String,
+    var ccCVV: String,
     @OneToMany(targetEntity = Taco::class)
-    val tacos: MutableList<Taco>,
-    var placedAt: Long,
+    var tacos: MutableList<Taco>,
+    var placedAt: Date?,
     @ManyToOne
     var user: User? = null,
     @Id
@@ -32,7 +32,7 @@ data class Order(
 ) {
      constructor() : this("", "", "",
          "", "", "", "",
-         "", mutableListOf(), 0L, null, 0L)
+         "", mutableListOf(), null, null, 0L)
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
@@ -50,6 +50,6 @@ data class Order(
 
     @PrePersist
     fun placedAt() {
-        placedAt = Date().time
+        placedAt = Date()
     }
 }

@@ -1,10 +1,3 @@
-delete from ingredients;
-delete from orders;
-delete from tacos;
-delete from taco_ingredients;
-delete from taco_orders;
-
-
 insert into ingredients(ingredientIdentifier, name, type) values ('FLTO', 'Flour Tortilla', 'WRAP');
 insert into ingredients(ingredientIdentifier, name, type) values ('COTO', 'Corn Torilla', 'WRAP');
 insert into ingredients(ingredientIdentifier, name, type) values ('GRBF', 'Ground Beef', 'PROTEIN');

@@ -1,9 +1,11 @@
 package kpk.com.tacocloud.controllers
 
 import kpk.com.tacocloud.model.Order
+import kpk.com.tacocloud.model.User
 import kpk.com.tacocloud.repository.jpa.OrderJPARepository
 import kpk.com.tacocloud.repository.jpa.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.context.SecurityContext
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Controller
@@ -20,8 +22,7 @@ import javax.validation.Valid
 class OrdersController (@Autowired val ordersRepository: OrderJPARepository, val userRepository: UserRepository) {
 
     @GetMapping("/current")
-    fun getOrderForm(model: Model, @SessionAttribute("order") order: Order): String {
-        model.addAttribute("order", order)
+    fun getOrderForm(model: Model): String {
         return "order_form"
     }
 
@@ -38,10 +39,17 @@ class OrdersController (@Autowired val ordersRepository: OrderJPARepository, val
         return "redirect:/orders/order_submitted"
     }
 
-    @GetMapping("order_submitted")
+    @GetMapping("/order_submitted")
     fun orderSubmitted(sessionStatus: SessionStatus): String {
         sessionStatus.setComplete()
         return "order_submitted"
+    }
+
+    @GetMapping("/orders_list")
+    fun getOrdersForUser(@AuthenticationPrincipal user: User, model: Model): String {
+        val ordersList = ordersRepository.findByUserOrderByPlacedAtDesc(user)
+        model.addAttribute("userName", user.username)
+        return "orders_list"
     }
 
 

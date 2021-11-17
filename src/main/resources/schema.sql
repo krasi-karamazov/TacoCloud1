@@ -11,11 +11,11 @@ create table if not exists tacos (
     createdAt timestamp not null
 );
 
-create table if not exists taco_ingredients (
-    taco BIGINT not null ,
-    ingredient bigint not null,
-    constraint foreign key (taco) references tacos(id),
-    constraint foreign key (ingredient) references ingredients(id)
+create table if not exists tacos_ingredients (
+    taco BIGINT,
+    ingredient bigint,
+    foreign key (taco) references tacos(id),
+    foreign key (ingredient) references ingredients(id)
 );
 
 create table if not exists orders (
@@ -32,8 +32,9 @@ create table if not exists orders (
 );
 
 create table if not exists taco_orders (
-    tacoOrder BIGINT not null,
-    taco BIGINT not null,
+    tacoOrder BIGINT,
+    taco BIGINT,
     foreign key (tacoOrder) references orders(id),
     foreign key (taco) references tacos(id)
 );
+
